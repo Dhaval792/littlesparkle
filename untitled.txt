@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little Sparkle | Kids Fashion Jewellery India</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --blush: #FFB6C1; /* Soft Pink */
+            --sky: #B2E2F2;   /* Soft Blue */
+            --mint: #D0F0C0;  /* Soft Green */
+            --gold: #D4AF37;  /* Premium Gold */
+            --dark: #4A4A4A;
+            --white: #ffffff;
+        }
+
+        /* Basic Reset & Global Styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; color: var(--dark); background: #fffafb; overflow-x: hidden; }
+        h1, h2, .logo { font-family: 'Fredoka', sans-serif; color: var(--dark); }
+        ul { list-style: none; }
+        a { text-decoration: none; color: inherit; }
+
+        /* Navigation */
+        header {
+            background: var(--white);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo { font-size: 1.6rem; color: var(--blush); font-weight: 600; }
+        .nav-links a { margin-left: 20px; font-weight: 400; font-size: 0.9rem; }
+        .cart-icon { position: relative; cursor: pointer; }
+        #cart-count {
+            position: absolute; top: -10px; right: -10px;
+            background: var(--blush); color: white;
+            border-radius: 50%; padding: 2px 6px; font-size: 10px;
+        }
+
+        /* Utility: Page Sections */
+        .page { display: none; padding: 20px 5%; min-height: 80vh; }
+        .active { display: block; }
+
+        /* Home Page Elements */
+        .hero {
+            background: var(--sky);
+            border-radius: 20px;
+            padding: 60px 20px;
+            text-align: center;
+            margin: 20px 5%;
+        }
+        .hero h1 { font-size: 2.5rem; margin-bottom: 10px; }
+        .btn {
+            display: inline-block;
+            background: var(--blush);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            margin-top: 20px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn:hover { background: var(--dark); }
+
+        /* Product Grid */
+        .section-title { text-align: center; margin: 40px 0 20px; font-size: 1.8rem; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #f0f0f0;
+            position: relative;
+        }
+        .card img { width: 100%; border-radius: 10px; margin-bottom: 10px; }
+        .tag {
+            position: absolute; top: 10px; left: 10px;
+            font-size: 10px; padding: 3px 8px; border-radius: 5px; color: white;
+        }
+        .tag.new { background: var(--sky); color: #333; }
+        .tag.hot { background: var(--gold); }
+        .price { font-weight: 600; color: var(--gold); margin: 5px 0; }
+        .safety-note { font-size: 10px; color: #888; margin-bottom: 10px; }
+
+        /* Cart & Checkout Style */
+        .cart-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px; border-bottom: 1px solid #eee; background: white;
+        }
+        .payment-methods {
+            margin-top: 20px; padding: 20px; background: #fef1f3; border-radius: 10px;
+        }
+
+        /* Footer */
+        footer { background: #f9f9f9; padding: 40px 5%; border-top: 1px solid #eee; margin-top: 50px; }
+        .footer-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 30px; }
+        .whatsapp-float {
+            position: fixed; bottom: 20px; right: 20px;
+            background: #25D366; color: white; padding: 15px 20px;
+            border-radius: 50px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 600px) {
+            .grid { grid-template-columns: 1fr 1fr; }
+            .hero h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <a href="#" onclick="showPage('home')" class="logo">Little Sparkle</a>
+    <nav class="nav-links">
+        <span class="cart-icon" onclick="showPage('cart')">🛒<span id="cart-count">0</span></span>
+    </nav>
+</header>
+
+<main id="home" class="page active">
+    <section class="hero">
+        <h1>Handcrafted Joy ✨</h1>
+        <p>100% Lead-Free & Skin-Friendly Jewellery for Kids</p>
+        <a href="#products" class="btn">Shop Now</a>
+    </section>
+
+    <h2 class="section-title" id="products">Our Collection</h2>
+    <div class="grid" id="product-container">
+        </div>
+</main>
+
+<section id="cart" class="page">
+    <h2>Your Shopping Bag</h2>
+    <div id="cart-items-list">
+        <p style="text-align:center; padding:50px;">Your bag is empty. Let's add some sparkle!</p>
+    </div>
+    <div class="payment-methods" id="checkout-section" style="display:none;">
+        <h3>Checkout</h3>
+        <p>Total: <span id="total-amt">₹0</span></p>
+        <div style="margin-top:15px;">
+            <label><input type="radio" name="pay" checked> UPI (GPay / PhonePe)</label><br>
+            <label><input type="radio" name="pay"> Cash on Delivery (COD)</label>
+        </div>
+        <button class="btn" onclick="alert('Order Placed Successfully!')">Place Order</button>
+    </div>
+    <button class="btn" style="background:var(--dark)" onclick="showPage('home')">Continue Shopping</button>
+</section>
+
+<section id="about" class="page">
+    <h2>About Little Sparkle</h2>
+    <p>Based in India, we believe every child deserves to shine safely. Our jewellery is made with hypoallergenic materials, specifically designed for sensitive skin (ages 1-12).</p>
+</section>
+
+<section id="policy" class="page">
+    <h2>Return & Refund Policy</h2>
+    <p>We offer a 7-day easy return policy for unused items in their original packaging.</p>
+</section>
+
+<footer>
+    <div class="footer-cols">
+        <div>
+            <h3 class="logo" style="font-size:1.2rem">Little Sparkle</h3>
+            <p>Certified Quality | Safe for Kids</p>
+        </div>
+        <div>
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="#" onclick="showPage('about')">About Us</a></li>
+                <li><a href="#" onclick="showPage('policy')">Returns</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>Follow Us</h4>
+            <p>Instagram | Facebook</p>
+        </div>
+    </div>
+    <p style="text-align:center; margin-top:30px; font-size:12px;">© 2026 Little Sparkle Jewelry India.</p>
+</footer>
+
+<a href="https://wa.me/919999999999?text=Hi! I want to inquire about kids jewellery." class="whatsapp-float" target="_blank">WhatsApp Us</a>
+
+<script>
+    const products = [
+        { id: 1, name: "Silver Star Studs", price: 899, tag: "NEW", img: "https://placehold.co/200x200/FFB6C1/white?text=Earrings" },
+        { id: 2, name: "Butterfly Pendant", price: 1250, tag: "HOT", img: "https://placehold.co/200x200/B2E2F2/white?text=Necklace" },
+        { id: 3, name: "Nazariya Baby Bangle", price: 599, tag: "SAFETY", img: "https://placehold.co/200x200/D0F0C0/white?text=Bangle" },
+        { id: 4, name: "Daisy Floral Ring", price: 450, tag: "NEW", img: "https://placehold.co/200x200/FFB6C1/white?text=Ring" },
+        { id: 5, name: "Enamel Heart Bracelet", price: 1100, tag: "HOT", img: "https://placehold.co/200x200/B2E2F2/white?text=Bracelet" },
+        { id: 6, name: "Unicorn Hair Pins", price: 299, tag: "POPULAR", img: "https://placehold.co/200x200/D0F0C0/white?text=Hair+Pins" },
+        { id: 7, name: "Gold Plated Anklet", price: 1500, tag: "PREMIUM", img: "https://placehold.co/200x200/FFB6C1/white?text=Anklet" },
+        { id: 8, name: "Teddy Bear Studs", price: 750, tag: "NEW", img: "https://placehold.co/200x200/B2E2F2/white?text=Bear+Studs" }
+    ];
+
+    let cart = [];
+
+    // Navigation Logic
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    // Load Products
+    function initProducts() {
+        const container = document.getElementById('product-container');
+        container.innerHTML = products.map(p => `
+            <div class="card">
+                <span class="tag ${p.tag === 'NEW' ? 'new' : 'hot'}">${p.tag}</span>
+                <img src="${p.img}" alt="${p.name}">
+                <h4>${p.name}</h4>
+                <p class="price">₹${p.price}</p>
+                <p class="safety-note">✓ Nickel Free & Lead Free</p>
+                <button class="btn" style="padding: 8px 15px; font-size:12px;" onclick="addToCart(${p.id})">Add to Bag</button>
+            </div>
+        `).join('');
+    }
+
+    // Cart Logic
+    function addToCart(productId) {
+        const product = products.find(p => p.id === productId);
+        cart.push(product);
+        updateCartUI();
+        alert(`${product.name} added to bag!`);
+    }
+
+    function updateCartUI() {
+        document.getElementById('cart-count').innerText = cart.length;
+        const list = document.getElementById('cart-items-list');
+        const checkout = document.getElementById('checkout-section');
+        
+        if(cart.length === 0) {
+            list.innerHTML = '<p style="text-align:center; padding:50px;">Your bag is empty.</p>';
+            checkout.style.display = 'none';
+        } else {
+            let total = 0;
+            list.innerHTML = cart.map((item, index) => {
+                total += item.price;
+                return `
+                <div class="cart-item">
+                    <span>${item.name}</span>
+                    <span>₹${item.price}</span>
+                </div>`;
+            }).join('');
+            document.getElementById('total-amt').innerText = '₹' + total;
+            checkout.style.display = 'block';
+        }
+    }
+
+    window.onload = initProducts;
+</script>
+
+</body>
+</html>
